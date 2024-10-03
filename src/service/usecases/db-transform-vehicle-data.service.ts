@@ -2,12 +2,14 @@ import { TransformVehicleData } from "@/domain/usecases";
 import { LoadVehicleMakeNhstaApi, LoadVehicleTypeByMakeIdNhstaApi, XmlParser } from "../protocols";
 import { Vehicle } from "@/domain/models";
 import { BulkSaveVehicleDataRepository } from "../protocols/repository";
+import { Inject, Injectable } from "@nestjs/common";
 
+@Injectable()
 export class DbTransformVehicleData implements TransformVehicleData {
   constructor(
-    private readonly veicleNhstaApi: LoadVehicleMakeNhstaApi & LoadVehicleTypeByMakeIdNhstaApi,
-    private readonly xmlAdapter: XmlParser,
-    private readonly vehicheRepository: BulkSaveVehicleDataRepository
+    @Inject('VeicleNhstaApi') private readonly veicleNhstaApi: LoadVehicleMakeNhstaApi & LoadVehicleTypeByMakeIdNhstaApi,
+    @Inject('XmlAdapter') private readonly xmlAdapter: XmlParser,
+    @Inject('VehicheRepository') private readonly vehicheRepository: BulkSaveVehicleDataRepository
   ) { }
 
   async transform(input: TransformVehicleData.Input): Promise<TransformVehicleData.Output> {

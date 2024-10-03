@@ -5,7 +5,9 @@ import {
 
 import { VehicleModel } from '../../entities'
 import { MongooseHelper } from '../../helpers'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class VehicleDataRepository
 implements
 BulkSaveVehicleDataRepository,

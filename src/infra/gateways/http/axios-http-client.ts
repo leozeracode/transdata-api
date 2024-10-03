@@ -1,6 +1,8 @@
 import { HttpClient, HttpRequest, HttpResponse } from '@/service/protocols'
+import { Injectable } from '@nestjs/common'
 import axios, { AxiosResponse } from 'axios'
 
+@Injectable()
 export class AxiosHttpClient implements HttpClient {
   constructor (private readonly headers?: any) {}
   async request (data: HttpRequest): Promise<HttpResponse> {
