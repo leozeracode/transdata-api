@@ -29,4 +29,19 @@ describe('VehicleDataRepository', () => {
       expect(data).toBeTruthy()
     })
   })
+
+  describe('load()', () => {
+    it('should return a list of properties on success', async () => {
+      const sut = makeSut()
+      await collection.insertMany(mockVehiclesArray())
+      const  items  = await sut.load()
+      expect(items).toHaveLength(4)
+    })
+
+    it('should return a list of properties on success', async () => {
+      const sut = makeSut()
+      const  items  = await sut.load()
+      expect(items).toHaveLength(0)
+    })
+  })
 })
