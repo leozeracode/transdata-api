@@ -1,7 +1,7 @@
 import { TransformVehicleData } from "@/domain/usecases";
 import { LoadVehicleMakeNhstaApi, LoadVehicleTypeByMakeIdNhstaApi, XmlParser } from "../protocols";
 import { Vehicle } from "@/domain/models";
-import { BulkSaveVehicleDataRepository } from "../protocols/gateways/repository";
+import { BulkSaveVehicleDataRepository } from "../protocols/repository";
 
 export class DbTransformVehicleData implements TransformVehicleData {
   constructor(

@@ -2,7 +2,7 @@ import { mock, MockProxy } from "jest-mock-extended"
 import { LoadVehicleMakeNhstaApi, LoadVehicleTypeByMakeIdNhstaApi, XmlParser } from "../protocols"
 import { DbTransformVehicleData } from "./db-transform-vehicle-data"
 import { mockMakeApi, mockTypeApi } from "../test"
-import { BulkSaveVehicleDataRepository } from "../protocols/gateways/repository"
+import { BulkSaveVehicleDataRepository } from "../protocols/repository"
 
 describe('DbTransformVehicleData', () => {
   let sut: DbTransformVehicleData
