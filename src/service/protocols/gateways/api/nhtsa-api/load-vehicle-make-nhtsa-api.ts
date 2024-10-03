@@ -5,8 +5,5 @@ export interface LoadVehicleMakeNhstaApi {
 export namespace LoadVehicleMakeNhstaApi { 
   export type Input = {}
 
-  export type Output = {
-    makeId: string
-    makeName: string
-  }
+  export type Output = string
 }

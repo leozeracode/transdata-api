@@ -1,12 +1,12 @@
 import {  HttpClient } from '@/service/protocols'
-import { VehicleMakeNhstaApi } from './vehicle-make-nhtsa-api'
+import { VehicleNhstaApi } from './vehicle-make-nhtsa-api'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { faker } from '@faker-js/faker'
 
 describe('VehicleMakeNhstaApi', () => {
   let httpClient: MockProxy<HttpClient>
-  let sut: VehicleMakeNhstaApi
+  let sut: VehicleNhstaApi
   let baseUrl: string
   let data: string
 
@@ -19,7 +19,7 @@ describe('VehicleMakeNhstaApi', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     httpClient.request.mockResolvedValue({ data: { data }, statusCode: 200 })
-    sut = new VehicleMakeNhstaApi(baseUrl, httpClient)
+    sut = new VehicleNhstaApi(baseUrl, httpClient)
   })
 
   describe('GET / LoadVehicleMakeNhstaApi', () => {

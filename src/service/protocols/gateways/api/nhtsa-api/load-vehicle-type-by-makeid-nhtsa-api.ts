@@ -7,8 +7,5 @@ export namespace LoadVehicleTypeByMakeIdNhstaApi {
     makeId: string
   }
 
-  export type Output = {
-    makeId: string
-    makeName: string
-  }
+  export type Output = string
 }

@@ -2,13 +2,13 @@ import { LoadVehicleMakeNhstaApi, HttpClient, LoadVehicleTypeByMakeIdNhstaApi } 
 import { HttpStatusCode } from '@/domain/enums'
 import { HttpError } from '@/domain/models'
 
-export class VehicleMakeNhstaApi implements LoadVehicleMakeNhstaApi, LoadVehicleTypeByMakeIdNhstaApi {
+export class VehicleNhstaApi implements LoadVehicleMakeNhstaApi, LoadVehicleTypeByMakeIdNhstaApi {
   constructor (
     private readonly baseUrl: string,
     private readonly httpClient: HttpClient
   ) {}
 
-  async load (input: LoadVehicleMakeNhstaApi.Input): Promise<LoadVehicleMakeNhstaApi.Output> {
+  async load (_input: LoadVehicleMakeNhstaApi.Input): Promise<LoadVehicleMakeNhstaApi.Output> {
     const { data, statusCode } = await this.httpClient.request({
       method: 'get',
       url: `${this.baseUrl}/vehicles/getallmakes?format=XML`,
