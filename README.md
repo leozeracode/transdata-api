@@ -2,10 +2,6 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-<h1 align="center">
-    <img alt="dotnetcore" title="#NAVATESTE" src="https://miro.medium.com/v2/resize:fit:705/1*OiVr2f63kbvC4xKCB_z-mw.png" width="650px" />
-</h1>
-
 <h4 align="center"> 
 	 Transdata API 🚗📊
 </h4>
