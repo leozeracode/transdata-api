@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-api
+    ports:
+      - '3000:3000'
+    environment:
+      MONGO_URL: mongodb://mongo:27017/transdata-dev?retryWrites=true&w=majority&appName=transdata
+      VEHICLE_DATA_QUANTITY: 100
+      PORT: 3000
+      NODE_ENV: development
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+    volumes:
+      - .:/app
+      - /app/node_modules 
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
