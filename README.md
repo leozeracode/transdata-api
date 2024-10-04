@@ -2,29 +2,58 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<h1 align="center">
+    <img alt="dotnetcore" title="#NAVATESTE" src="https://miro.medium.com/v2/resize:fit:705/1*OiVr2f63kbvC4xKCB_z-mw.png" width="650px" />
+</h1>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<h4 align="center"> 
+	 Transdata API 🚗📊
+</h4>
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/leozeracode/transdata-api?color=%2304D361">
+
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/leozeracode/transdata-api">
+	
+  <a href="https://www.linkedin.com/in/leonardo-rviana/">
+    <img alt="Made by Leonardo Viana" src="https://img.shields.io/badge/made%20by-LeonardoViana-%2304D361">
+  </a>
+
+  <a href="https://github.com/leozeracode/transdata-api/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/leozeracode/transdata-api">
+  </a>
+
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
+   <a href="https://github.com/leozeracode/transdata-api/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/leozeracode/transdata-api?style=social">
+  </a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The Transdata API is a service developed using NestJS with the purpose of providing a GraphQL interface to access vehicle data from an external API (National Highway Traffic Safety Administration - NHTSA). The API allows querying, transforming, and storing manufacturer and vehicle type data in a MongoDB database for later retrieval through a single GraphQL endpoint.
+
+The project is set up to be easily run in a Dockerized environment, with support for data migration and seeding operations. Additionally, a cron job has been implemented to ensure that the information is updated periodically.
+
+## Clone the Repository
+
+```bash
+$ git clone https://github.com/seu-usuario/transdata-api.git
+$ cd transdata-api
+```
+
+## Configure the Environment
+Create a .env file in the root directory of the project with the following variables:
+
+```
+MONGO_URL=mongodb://mongo:27017/portal-test?retryWrites=true&w=majority&appName=transdata
+VEHICLE_DATA_QUANTITY=1
+NODE_ENV=development
+```
+
+## Run the Environment with Docker
+```bash
+$ docker-compose up --build
+```
 
 ## Project setup
 
@@ -45,6 +74,39 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Access the GraphQL Endpoint
+```
+query {
+  vehicles {
+    id
+    makeId
+    makeName
+    vehicleTypes {
+      typeId
+      typeName
+    }
+  }
+}
+```
+
+## Project Structure
+The project follows a clean and modular architecture:
+
+transdata-api/
+│
+├── Dockerfile               # Configuration file to create the Docker image for the API
+├── docker-compose.yml       # Docker Compose configuration to run both the API and MongoDB
+├── src/                     # Project source code
+│   ├── app.module.ts        # Main module of the NestJS application
+│   ├── main/                # Application entry point and configuration
+│   ├── infra/               # Infrastructure layer, including database configurations and external API integrations
+│   ├── domain/              # Domain layer, containing business logic entities and interfaces
+│   ├── service/             # Service layer, implementing use cases and business rules
+│   └── ...                  # Other files and directories
+├── tests/                   # End-to-End (E2E) and unit tests
+│   └── vehicle-data-graphql.e2e.spec.ts # Integration tests for the GraphQL endpoint
+└── ...
+
 ## Run tests
 
 ```bash
@@ -57,29 +119,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
