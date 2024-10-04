@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { VehicleModule } from './app/graphql';
+import { MigrationExtensionModule } from './main/extension';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { VehicleModule } from './app/graphql';
       driver: ApolloDriver, 
     }),
     VehicleModule,
+    MigrationExtensionModule
   ],
   controllers: [AppController],
   providers: [AppService],

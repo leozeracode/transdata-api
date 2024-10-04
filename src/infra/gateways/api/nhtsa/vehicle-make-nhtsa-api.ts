@@ -1,13 +1,13 @@
 import { LoadVehicleMakeNhstaApi, HttpClient, LoadVehicleTypeByMakeIdNhstaApi } from '@/service/protocols'
 import { HttpStatusCode } from '@/domain/enums'
 import { HttpError } from '@/domain/models'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 
 @Injectable()
 export class VehicleNhstaApi implements LoadVehicleMakeNhstaApi, LoadVehicleTypeByMakeIdNhstaApi {
   constructor (
-    private readonly baseUrl: string,
-    private readonly httpClient: HttpClient
+    @Inject('API_BASE_URL') private readonly baseUrl: string,
+    @Inject('HttpClient') private readonly httpClient: HttpClient
   ) {}
 
   async load (_input: LoadVehicleMakeNhstaApi.Input): Promise<LoadVehicleMakeNhstaApi.Output> {

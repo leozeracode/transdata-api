@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios'
 
 @Injectable()
 export class AxiosHttpClient implements HttpClient {
-  constructor (private readonly headers?: any) {}
+  constructor () {}
   async request (data: HttpRequest): Promise<HttpResponse> {
     let axiosResponse: AxiosResponse
 
@@ -16,7 +16,6 @@ export class AxiosHttpClient implements HttpClient {
         data: data.body,
         headers: {
           ...data.headers,
-          ...this.headers
         },
         params: data.params
       })
