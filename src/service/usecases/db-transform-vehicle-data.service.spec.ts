@@ -32,18 +32,18 @@ describe('DbTransformVehicleData', () => {
           {
             AllVehicleMakes: [
               {
-                Make_ID: 12858,
-                Make_Name: '#1 ALPINE CUSTOMS'
+                Make_ID: [12858],
+                Make_Name: ['#1 ALPINE CUSTOMS']
               },
               {
-                Make_ID: 12859,
-                Make_Name: 'FORD'
+                Make_ID: [12859],
+                Make_Name: ['FORD']
               }
             ],
             VehicleTypesForMakeIds: [
               {
-                VehicleTypeId: 2,
-                VehicleTypeName: 'Passenger Car'
+                VehicleTypeId: [2],
+                VehicleTypeName: ['Passenger Car']
               }
             ]
           }
@@ -71,7 +71,7 @@ describe('DbTransformVehicleData', () => {
     await sut.transform(input)
     expect(xmlAdapter.parse).toHaveBeenNthCalledWith(1, mockMakeApi())
     expect(xmlAdapter.parse).toHaveBeenNthCalledWith(2, mockTypeApi())
-    expect(xmlAdapter.parse).toHaveBeenCalledTimes(2)
+    expect(xmlAdapter.parse).toHaveBeenCalledTimes(3)
   })
 
   it('should rethrow if XmlParser throws', async () => {
@@ -84,16 +84,27 @@ describe('DbTransformVehicleData', () => {
     await sut.transform(input)
     expect(vehicheRepository.bulk).toHaveBeenCalledWith([
       {
-        id: 12859,
-        makeId: 12859,
-        makeName: 'FORD',
+        id: 12858,
+        makeId: 12858,
+        makeName: "#1 ALPINE CUSTOMS",
         vehicleTypes: [
           {
             typeId: 2,
-            typeName: 'Passenger Car'
-          }
-        ]
-      }
+            typeName: "Passenger Car",
+          },
+        ],
+      },
+      {
+        id: 12859,
+        makeId: 12859,
+        makeName: "FORD",
+        vehicleTypes: [
+          {
+            typeId: 2,
+            typeName: "Passenger Car",
+          },
+        ],
+      },
     ])
   })
 
@@ -110,16 +121,27 @@ describe('DbTransformVehicleData', () => {
       message: 'Response returned successfully',
       vehicles: [
         {
-          id: 12859,
-          makeId: 12859,
-          makeName: 'FORD',
+          id: 12858,
+          makeId: 12858,
+          makeName: "#1 ALPINE CUSTOMS",
           vehicleTypes: [
             {
               typeId: 2,
-              typeName: 'Passenger Car'
-            }
-          ]
-        }
+              typeName: "Passenger Car",
+            },
+          ],
+        },
+        {
+          id: 12859,
+          makeId: 12859,
+          makeName: "FORD",
+          vehicleTypes: [
+            {
+              typeId: 2,
+              typeName: "Passenger Car",
+            },
+          ],
+        },
       ]
     })
   })
