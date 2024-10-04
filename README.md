@@ -88,6 +88,7 @@ query {
 ## Project Structure
 The project follows a clean and modular architecture:
 
+```
 transdata-api/
 │
 ├── Dockerfile               # Configuration file to create the Docker image for the API
@@ -102,6 +103,7 @@ transdata-api/
 ├── tests/                   # End-to-End (E2E) and unit tests
 │   └── vehicle-data-graphql.e2e.spec.ts # Integration tests for the GraphQL endpoint
 └── ...
+```
 
 ## Run tests
 
