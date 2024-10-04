@@ -39,6 +39,7 @@ export class DbTransformVehicleData implements TransformVehicleData {
         }
         const result = await this.xmlAdapter.parse(vehicleTypes)
         vehicledata.push({
+          id: make.id,
           makeId: make.id,
           makeName: make.name,
           vehicleTypes: result.Response.Results.VehicleTypesForMakeIds.map(type => ({

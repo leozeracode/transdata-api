@@ -1,4 +1,5 @@
 export type Vehicle = {
+  id: string
   makeId: string
   makeName: string
   vehicleTypes: VehicleType[]
