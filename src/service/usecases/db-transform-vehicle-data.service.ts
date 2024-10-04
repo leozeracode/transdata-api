@@ -14,7 +14,7 @@ export class DbTransformVehicleData implements TransformVehicleData {
 
   async transform({
     quantity,
-    lastVehicleId
+    lastVehicleMakeId
   }: TransformVehicleData.Input): Promise<TransformVehicleData.Output> {
     const vehicleMakes = await this.veicleNhstaApi.load({})
     if (!vehicleMakes) {
@@ -36,11 +36,16 @@ export class DbTransformVehicleData implements TransformVehicleData {
 
     if (mappedResponse){
       const filteredVehicleMakes = mappedResponse.vehicleMakes
-      .filter((make) => (lastVehicleId ? make?.id > lastVehicleId : true)) 
+      .filter((make) => (lastVehicleMakeId ? Number(make?.id?.[0]) > lastVehicleMakeId : true)) 
       .slice(0, quantity);
 
       for (const make of filteredVehicleMakes) {
-        const vehicleTypes = await this.veicleNhstaApi.loadByMakeId({ makeId: make.id });
+        const id = make.id[0]
+        const name = make.name[0]
+        if (!id || !name) {
+          continue;
+        }
+        const vehicleTypes = await this.veicleNhstaApi.loadByMakeId({ makeId: id });
         if (!vehicleTypes) {
           return null;
         }
@@ -48,12 +53,12 @@ export class DbTransformVehicleData implements TransformVehicleData {
         const typeResult = await this.xmlAdapter.parse(vehicleTypes);
   
         vehicleData.push({
-          id: make.id,
-          makeId: make.id,
-          makeName: make.name,
+          id: id,
+          makeId: id,
+          makeName: name,
           vehicleTypes: typeResult.Response.Results[0].VehicleTypesForMakeIds?.map?.((type) => ({
-            typeId: type.VehicleTypeId,
-            typeName: type.VehicleTypeName,
+            typeId: type.VehicleTypeId[0],
+            typeName: type.VehicleTypeName[0],
           })),
         });
       }

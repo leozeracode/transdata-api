@@ -7,7 +7,7 @@ export interface TransformVehicleData {
 export namespace TransformVehicleData {
   export type Input = {
     quantity?: number
-    lastVehicleId?: number    
+    lastVehicleMakeId?: number    
   }
 
   export type Output = {

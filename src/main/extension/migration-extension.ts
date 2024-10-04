@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import schedule from 'node-schedule'
 import { VehicleModel } from '@/infra/db/mongodb/entities';
 import { DbTransformVehicleData } from '@/service/usecases';
 
@@ -11,7 +12,17 @@ export class MigrationExtension implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
+    if (process.env.NODE_ENV === 'test') {
+      this.logger.log('Seed is disabled in test environment.');
+      return;
+    }
+    
     await this.runMigrations();
+
+    schedule.scheduleJob('*/10 * * * *', async () => {
+      this.logger.log('Running scheduled migration...');
+      await this.runMigrations();
+    });
   }
 
   public async runMigrations() {
@@ -25,13 +36,18 @@ export class MigrationExtension implements OnModuleInit {
   }
 
   private async seedVehicleData() {
-    const vehicleCount = await VehicleModel.countDocuments();
-    if (vehicleCount === 0) {
-      this.logger.log('Seeding initial Vehicle data...');
-      await this.service.transform({});
-      this.logger.log('Seeding completed.');
-    } else {
-      this.logger.log('Skipping seeding. Vehicle data already exists.');
+    try {
+      const lastVehicle = await VehicleModel.findOne().sort({ makeId: -1 }).exec();
+      const lastVehicleId = lastVehicle ? lastVehicle.makeId : null;
+
+      await this.service.transform({
+        quantity: Number(process.env.VEHICLE_DATA_QUANTITY),
+        lastVehicleMakeId: Number(lastVehicleId),
+      });
+
+      this.logger.log('Seeding completed successfully.');
+    } catch (error) {
+      this.logger.error('Error during seeding', error);
     }
   }
 }
